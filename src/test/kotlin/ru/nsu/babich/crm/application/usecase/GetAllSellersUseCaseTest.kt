@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import ru.nsu.babich.crm.application.usecase.seller.GetAllSellersUseCase
 import ru.nsu.babich.crm.domain.model.Seller
 import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 import java.time.LocalDateTime

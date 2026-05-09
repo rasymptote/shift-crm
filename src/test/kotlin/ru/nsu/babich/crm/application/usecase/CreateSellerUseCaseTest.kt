@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import ru.nsu.babich.crm.application.dto.CreateSellerDto
+import ru.nsu.babich.crm.application.usecase.seller.CreateSellerUseCase
 import ru.nsu.babich.crm.domain.port.TimeProvider
 import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 import java.time.LocalDateTime

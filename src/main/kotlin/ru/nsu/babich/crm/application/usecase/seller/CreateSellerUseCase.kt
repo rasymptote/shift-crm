@@ -1,4 +1,4 @@
-package ru.nsu.babich.crm.application.usecase
+package ru.nsu.babich.crm.application.usecase.seller
 
 import ru.nsu.babich.crm.application.dto.CreateSellerDto
 import ru.nsu.babich.crm.domain.model.Seller
