@@ -54,7 +54,7 @@ class GetTransactionUseCaseTest {
 
         assertEquals(transaction, result)
         verify(exactly = 1) {
-            transactionRepository.findById(transaction.id!!)
+            transactionRepository.findById(transaction.id)
         }
     }
 
