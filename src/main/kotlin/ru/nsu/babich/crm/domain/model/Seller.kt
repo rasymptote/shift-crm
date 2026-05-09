@@ -7,4 +7,5 @@ data class Seller(
     val name: String,
     val contactInfo: String,
     val registrationDate: LocalDateTime,
+    val deletedAt: LocalDateTime? = null,
 )
