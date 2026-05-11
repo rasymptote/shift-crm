@@ -8,4 +8,7 @@ data class Seller(
     val contactInfo: String,
     val registrationDate: LocalDateTime,
     val deletedAt: LocalDateTime? = null,
-)
+) {
+    val isActive: Boolean
+        get() = deletedAt == null
+}
