@@ -3,7 +3,10 @@ package ru.nsu.babich.crm.application.usecase.transaction
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -15,7 +18,6 @@ import ru.nsu.babich.crm.domain.exception.InvalidTransactionAmountException
 import ru.nsu.babich.crm.domain.exception.SellerNotFoundException
 import ru.nsu.babich.crm.domain.model.PaymentType
 import ru.nsu.babich.crm.domain.model.Seller
-import ru.nsu.babich.crm.domain.port.TimeProvider
 import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 import ru.nsu.babich.crm.domain.port.repository.TransactionRepository
 import java.math.BigDecimal
@@ -28,9 +30,6 @@ class CreateTransactionUseCaseTest {
 
     @MockK
     lateinit var sellerRepository: SellerRepository
-
-    @MockK
-    lateinit var timeProvider: TimeProvider
 
     private lateinit var useCase: CreateTransactionUseCase
 
@@ -51,13 +50,19 @@ class CreateTransactionUseCaseTest {
 
     @BeforeEach
     fun setUp() {
-        useCase = CreateTransactionUseCase(transactionRepository, sellerRepository, timeProvider)
+        mockkStatic(LocalDateTime::class)
+        useCase = CreateTransactionUseCase(transactionRepository, sellerRepository)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        unmockkStatic(LocalDateTime::class)
     }
 
     @Test
     fun `should create and save transaction when seller exists`() {
         every { sellerRepository.findActiveById(dto.sellerId) } returns seller
-        every { timeProvider.now() } returns fixedDateTime
+        every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
         val result = useCase.execute(dto)
@@ -107,7 +112,7 @@ class CreateTransactionUseCaseTest {
     fun `should use current time from TimeProvider for transaction date`() {
         val lazyDateTime = LocalDateTime.of(2026, 5, 9, 14, 30)
         every { sellerRepository.findActiveById(dto.sellerId) } returns seller
-        every { timeProvider.now() } returns lazyDateTime
+        every { LocalDateTime.now() } returns lazyDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
         val result = useCase.execute(dto)
@@ -115,7 +120,7 @@ class CreateTransactionUseCaseTest {
         assertEquals(lazyDateTime, result.transactionDate)
 
         verify(exactly = 1) {
-            timeProvider.now()
+            LocalDateTime.now()
         }
     }
 
@@ -124,7 +129,7 @@ class CreateTransactionUseCaseTest {
         listOf(PaymentType.CASH, PaymentType.CARD, PaymentType.TRANSFER).forEach { paymentType ->
             val testDto = dto.copy(paymentType = paymentType)
             every { sellerRepository.findActiveById(testDto.sellerId) } returns seller
-            every { timeProvider.now() } returns fixedDateTime
+            every { LocalDateTime.now() } returns fixedDateTime
             every { transactionRepository.save(any()) } returnsArgument 0
 
             val result = useCase.execute(testDto)
@@ -141,7 +146,7 @@ class CreateTransactionUseCaseTest {
         val dtoWithDifferentId = dto.copy(sellerId = sellerId)
 
         every { sellerRepository.findActiveById(dtoWithDifferentId.sellerId) } returns sellerWithDifferentId
-        every { timeProvider.now() } returns fixedDateTime
+        every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
         val result = useCase.execute(dtoWithDifferentId)
@@ -152,7 +157,7 @@ class CreateTransactionUseCaseTest {
     @Test
     fun `should set transaction id to null initially`() {
         every { sellerRepository.findActiveById(dto.sellerId) } returns seller
-        every { timeProvider.now() } returns fixedDateTime
+        every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
         val result = useCase.execute(dto)
@@ -166,7 +171,7 @@ class CreateTransactionUseCaseTest {
         val dtoWithLargeAmount = dto.copy(amount = largeAmount)
 
         every { sellerRepository.findActiveById(dtoWithLargeAmount.sellerId) } returns seller
-        every { timeProvider.now() } returns fixedDateTime
+        every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
         val result = useCase.execute(dtoWithLargeAmount)
@@ -180,7 +185,7 @@ class CreateTransactionUseCaseTest {
         val dtoWithSmallAmount = dto.copy(amount = smallAmount)
 
         every { sellerRepository.findActiveById(dtoWithSmallAmount.sellerId) } returns seller
-        every { timeProvider.now() } returns fixedDateTime
+        every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
         val result = useCase.execute(dtoWithSmallAmount)

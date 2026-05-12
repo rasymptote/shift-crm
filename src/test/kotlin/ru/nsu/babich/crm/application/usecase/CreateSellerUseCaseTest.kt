@@ -3,7 +3,10 @@ package ru.nsu.babich.crm.application.usecase
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -11,7 +14,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import ru.nsu.babich.crm.application.dto.CreateSellerDto
 import ru.nsu.babich.crm.application.usecase.seller.CreateSellerUseCase
-import ru.nsu.babich.crm.domain.port.TimeProvider
 import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 import java.time.LocalDateTime
 
@@ -19,9 +21,6 @@ import java.time.LocalDateTime
 class CreateSellerUseCaseTest {
     @MockK
     lateinit var sellerRepository: SellerRepository
-
-    @MockK
-    lateinit var timeProvider: TimeProvider
 
     private lateinit var useCase: CreateSellerUseCase
 
@@ -34,12 +33,18 @@ class CreateSellerUseCaseTest {
 
     @BeforeEach
     fun setUp() {
-        useCase = CreateSellerUseCase(sellerRepository, timeProvider)
+        mockkStatic(LocalDateTime::class)
+        useCase = CreateSellerUseCase(sellerRepository)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        unmockkStatic(LocalDateTime::class)
     }
 
     @Test
     fun `should create and save seller`() {
-        every { timeProvider.now() } returns fixedDateTime
+        every { LocalDateTime.now() } returns fixedDateTime
         every { sellerRepository.save(any()) } returnsArgument 0
 
         val result = useCase.execute(dto)

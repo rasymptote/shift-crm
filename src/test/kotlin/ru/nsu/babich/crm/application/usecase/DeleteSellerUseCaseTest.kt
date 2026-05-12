@@ -3,7 +3,10 @@ package ru.nsu.babich.crm.application.usecase
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -11,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 import ru.nsu.babich.crm.application.usecase.seller.DeleteSellerUseCase
 import ru.nsu.babich.crm.domain.exception.SellerNotFoundException
 import ru.nsu.babich.crm.domain.model.Seller
-import ru.nsu.babich.crm.domain.port.TimeProvider
 import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 import java.time.LocalDateTime
 
@@ -19,9 +21,6 @@ import java.time.LocalDateTime
 class DeleteSellerUseCaseTest {
     @MockK
     lateinit var sellerRepository: SellerRepository
-
-    @MockK
-    lateinit var timeProvider: TimeProvider
 
     private lateinit var useCase: DeleteSellerUseCase
 
@@ -36,13 +35,19 @@ class DeleteSellerUseCaseTest {
 
     @BeforeEach
     fun setUp() {
-        useCase = DeleteSellerUseCase(sellerRepository, timeProvider)
+        mockkStatic(LocalDateTime::class)
+        useCase = DeleteSellerUseCase(sellerRepository)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        unmockkStatic(LocalDateTime::class)
     }
 
     @Test
     fun `should soft delete seller`() {
         every { sellerRepository.findActiveById(seller.id!!) } returns seller
-        every { timeProvider.now() } returns fixedDateTime
+        every { LocalDateTime.now() } returns fixedDateTime
         every { sellerRepository.save(any()) } returnsArgument 0
 
         useCase.execute(seller.id!!)

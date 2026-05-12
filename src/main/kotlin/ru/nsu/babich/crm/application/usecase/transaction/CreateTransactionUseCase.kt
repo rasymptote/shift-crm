@@ -4,15 +4,14 @@ import ru.nsu.babich.crm.application.dto.CreateTransactionDto
 import ru.nsu.babich.crm.domain.exception.InvalidTransactionAmountException
 import ru.nsu.babich.crm.domain.exception.SellerNotFoundException
 import ru.nsu.babich.crm.domain.model.Transaction
-import ru.nsu.babich.crm.domain.port.TimeProvider
 import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 import ru.nsu.babich.crm.domain.port.repository.TransactionRepository
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 class CreateTransactionUseCase(
     private val transactionRepository: TransactionRepository,
     private val sellerRepository: SellerRepository,
-    private val timeProvider: TimeProvider,
 ) {
     fun execute(dto: CreateTransactionDto): Transaction {
         val seller =
@@ -29,7 +28,7 @@ class CreateTransactionUseCase(
                 seller = seller,
                 amount = dto.amount,
                 paymentType = dto.paymentType,
-                transactionDate = timeProvider.now(),
+                transactionDate = LocalDateTime.now(),
             )
         return transactionRepository.save(transaction)
     }
