@@ -11,7 +11,7 @@ class CreateTransactionUseCase(
     private val transactionRepository: TransactionRepository,
     private val sellerRepository: SellerRepository,
 ) {
-    fun execute(dto: CreateTransactionDto): Transaction {
+    operator fun invoke(dto: CreateTransactionDto): Transaction {
         val seller =
             sellerRepository.findActiveById(dto.sellerId)
                 ?: throw SellerNotFoundException(dto.sellerId)

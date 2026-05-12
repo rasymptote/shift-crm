@@ -59,7 +59,7 @@ class GetTransactionsBySellerUseCaseTest {
         every { transactionRepository.findAllBySellerId(testSellerId) } returns
             listOf(firstTransaction, secondTransaction)
 
-        val transactions = getTransactionsBySellerUseCase.execute(testSellerId)
+        val transactions = getTransactionsBySellerUseCase(testSellerId)
 
         assertEquals(listOf(firstTransaction, secondTransaction), transactions)
         verify(exactly = 1) { transactionRepository.findAllBySellerId(testSellerId) }
@@ -69,7 +69,7 @@ class GetTransactionsBySellerUseCaseTest {
     fun `should return empty list when seller has no transactions`() {
         every { transactionRepository.findAllBySellerId(2L) } returns emptyList()
 
-        val transactions = getTransactionsBySellerUseCase.execute(2L)
+        val transactions = getTransactionsBySellerUseCase(2L)
 
         assertEquals(emptyList<Transaction>(), transactions)
         verify(exactly = 1) { transactionRepository.findAllBySellerId(2L) }

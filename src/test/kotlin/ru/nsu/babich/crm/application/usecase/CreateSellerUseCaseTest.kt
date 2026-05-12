@@ -47,7 +47,7 @@ class CreateSellerUseCaseTest {
         every { LocalDateTime.now() } returns fixedDateTime
         every { sellerRepository.save(any()) } returnsArgument 0
 
-        val result = useCase.execute(dto)
+        val result = useCase(dto)
 
         assertAll(
             { assertEquals(dto.name, result.name) },

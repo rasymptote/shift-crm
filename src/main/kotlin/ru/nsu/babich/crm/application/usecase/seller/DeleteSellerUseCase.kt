@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 class DeleteSellerUseCase(
     private val sellerRepository: SellerRepository,
 ) {
-    fun execute(sellerId: Long): Seller {
+    operator fun invoke(sellerId: Long): Seller {
         val seller =
             sellerRepository.findActiveById(sellerId)
                 ?: throw SellerNotFoundException(sellerId)

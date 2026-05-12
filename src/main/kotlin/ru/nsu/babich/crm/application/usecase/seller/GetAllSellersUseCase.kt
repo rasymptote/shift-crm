@@ -6,5 +6,5 @@ import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 class GetAllSellersUseCase(
     private val sellerRepository: SellerRepository,
 ) {
-    fun execute(): List<Seller> = sellerRepository.findAll().filter { it.isActive }
+    operator fun invoke(): List<Seller> = sellerRepository.findAll().filter { it.isActive }
 }

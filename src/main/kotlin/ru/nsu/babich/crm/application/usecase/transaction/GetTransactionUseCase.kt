@@ -7,7 +7,7 @@ import ru.nsu.babich.crm.domain.port.repository.TransactionRepository
 class GetTransactionUseCase(
     private val transactionRepository: TransactionRepository,
 ) {
-    fun execute(transactionId: Long): Transaction =
+    operator fun invoke(transactionId: Long): Transaction =
         transactionRepository.findById(transactionId)
             ?: throw TransactionNotFoundException(transactionId)
 }

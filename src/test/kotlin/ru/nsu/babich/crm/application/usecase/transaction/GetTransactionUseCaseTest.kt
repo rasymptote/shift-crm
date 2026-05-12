@@ -50,7 +50,7 @@ class GetTransactionUseCaseTest {
     fun `should return transaction when found`() {
         every { transactionRepository.findById(transaction.id!!) } returns transaction
 
-        val result = useCase.execute(transaction.id!!)
+        val result = useCase(transaction.id!!)
 
         assertEquals(transaction, result)
         verify(exactly = 1) {
@@ -65,7 +65,7 @@ class GetTransactionUseCaseTest {
 
         val exception =
             assertThrows<TransactionNotFoundException> {
-                useCase.execute(missingId)
+                useCase(missingId)
             }
 
         assertEquals("Transaction with id $missingId not found", exception.message)

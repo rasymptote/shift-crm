@@ -7,7 +7,7 @@ import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 class GetSellerUseCase(
     private val sellerRepository: SellerRepository,
 ) {
-    fun execute(sellerId: Long): Seller =
+    operator fun invoke(sellerId: Long): Seller =
         sellerRepository.findActiveById(sellerId)
             ?: throw SellerNotFoundException(sellerId)
 }

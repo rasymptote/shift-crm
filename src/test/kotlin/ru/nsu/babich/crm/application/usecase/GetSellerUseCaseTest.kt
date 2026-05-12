@@ -39,7 +39,7 @@ class GetSellerUseCaseTest {
     fun `should return seller when found`() {
         every { sellerRepository.findActiveById(seller.id!!) } returns seller
 
-        val result = useCase.execute(seller.id!!)
+        val result = useCase(seller.id!!)
 
         assertEquals(seller, result)
     }
@@ -49,7 +49,7 @@ class GetSellerUseCaseTest {
         every { sellerRepository.findActiveById(2) } returns null
 
         assertThrows<SellerNotFoundException> {
-            useCase.execute(2)
+            useCase(2)
         }
     }
 }

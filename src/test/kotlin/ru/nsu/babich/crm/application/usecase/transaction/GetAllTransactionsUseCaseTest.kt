@@ -57,7 +57,7 @@ class GetAllTransactionsUseCaseTest {
 
         every { transactionRepository.findAll() } returns listOf(firstTransaction, secondTransaction)
 
-        val retrievedTransactions = getAllTransactionsUseCase.execute()
+        val retrievedTransactions = getAllTransactionsUseCase()
 
         assertEquals(listOf(firstTransaction, secondTransaction), retrievedTransactions)
         verify(exactly = 1) { transactionRepository.findAll() }
@@ -67,7 +67,7 @@ class GetAllTransactionsUseCaseTest {
     fun `should return empty list when repository has no transactions`() {
         every { transactionRepository.findAll() } returns emptyList()
 
-        val retrievedTransactions = getAllTransactionsUseCase.execute()
+        val retrievedTransactions = getAllTransactionsUseCase()
 
         assertEquals(emptyList<Transaction>(), retrievedTransactions)
         verify(exactly = 1) { transactionRepository.findAll() }

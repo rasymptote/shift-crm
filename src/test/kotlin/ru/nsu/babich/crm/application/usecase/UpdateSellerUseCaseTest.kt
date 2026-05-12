@@ -49,7 +49,7 @@ class UpdateSellerUseCaseTest {
         every { sellerRepository.findActiveById(dto.id) } returns existingSeller
         every { sellerRepository.save(any()) } returnsArgument 0
 
-        val result = useCase.execute(dto)
+        val result = useCase(dto)
 
         assertEquals(dto.name, result.name)
         assertEquals(dto.contactInfo, result.contactInfo)
@@ -76,7 +76,7 @@ class UpdateSellerUseCaseTest {
         every { sellerRepository.findActiveById(dto.id) } returns null
 
         assertThrows<SellerNotFoundException> {
-            useCase.execute(dto)
+            useCase(dto)
         }
 
         verify(exactly = 0) {

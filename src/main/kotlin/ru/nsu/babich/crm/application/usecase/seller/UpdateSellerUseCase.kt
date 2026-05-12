@@ -8,7 +8,7 @@ import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 class UpdateSellerUseCase(
     private val sellerRepository: SellerRepository,
 ) {
-    fun execute(dto: UpdateSellerDto): Seller {
+    operator fun invoke(dto: UpdateSellerDto): Seller {
         val existingSeller =
             sellerRepository.findActiveById(dto.id)
                 ?: throw SellerNotFoundException(dto.id)

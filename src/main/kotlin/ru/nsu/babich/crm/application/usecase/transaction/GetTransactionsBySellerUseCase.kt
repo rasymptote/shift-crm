@@ -6,5 +6,5 @@ import ru.nsu.babich.crm.domain.port.repository.TransactionRepository
 class GetTransactionsBySellerUseCase(
     private val transactionRepository: TransactionRepository,
 ) {
-    fun execute(sellerId: Long): List<Transaction> = transactionRepository.findAllBySellerId(sellerId)
+    operator fun invoke(sellerId: Long): List<Transaction> = transactionRepository.findAllBySellerId(sellerId)
 }

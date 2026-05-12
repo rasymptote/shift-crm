@@ -46,7 +46,7 @@ class GetAllSellersUseCaseTest {
     fun `should return only active sellers`() {
         every { sellerRepository.findAll() } returns listOf(activeSeller, deletedSeller)
 
-        val result = useCase.execute()
+        val result = useCase()
 
         assertEquals(listOf(activeSeller), result)
 
@@ -59,7 +59,7 @@ class GetAllSellersUseCaseTest {
     fun `should return empty list when repository has no sellers`() {
         every { sellerRepository.findAll() } returns emptyList()
 
-        val result = useCase.execute()
+        val result = useCase()
 
         assertEquals(emptyList<Seller>(), result)
 

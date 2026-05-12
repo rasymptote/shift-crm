@@ -65,7 +65,7 @@ class CreateTransactionUseCaseTest {
         every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
-        val result = useCase.execute(dto)
+        val result = useCase(dto)
 
         assertAll(
             { assertEquals(seller, result.seller) },
@@ -95,7 +95,7 @@ class CreateTransactionUseCaseTest {
 
         val exception =
             assertThrows<SellerNotFoundException> {
-                useCase.execute(dto)
+                useCase(dto)
             }
 
         assertEquals("Seller with id ${dto.sellerId} not found", exception.message)
@@ -115,7 +115,7 @@ class CreateTransactionUseCaseTest {
         every { LocalDateTime.now() } returns lazyDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
-        val result = useCase.execute(dto)
+        val result = useCase(dto)
 
         assertEquals(lazyDateTime, result.transactionDate)
 
@@ -132,7 +132,7 @@ class CreateTransactionUseCaseTest {
             every { LocalDateTime.now() } returns fixedDateTime
             every { transactionRepository.save(any()) } returnsArgument 0
 
-            val result = useCase.execute(testDto)
+            val result = useCase(testDto)
 
             assertEquals(paymentType, result.paymentType)
         }
@@ -149,7 +149,7 @@ class CreateTransactionUseCaseTest {
         every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
-        val result = useCase.execute(dtoWithDifferentId)
+        val result = useCase(dtoWithDifferentId)
 
         assertEquals(sellerId, result.seller.id)
     }
@@ -160,7 +160,7 @@ class CreateTransactionUseCaseTest {
         every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
-        val result = useCase.execute(dto)
+        val result = useCase(dto)
 
         assertEquals(null, result.id)
     }
@@ -174,7 +174,7 @@ class CreateTransactionUseCaseTest {
         every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
-        val result = useCase.execute(dtoWithLargeAmount)
+        val result = useCase(dtoWithLargeAmount)
 
         assertEquals(largeAmount, result.amount)
     }
@@ -188,7 +188,7 @@ class CreateTransactionUseCaseTest {
         every { LocalDateTime.now() } returns fixedDateTime
         every { transactionRepository.save(any()) } returnsArgument 0
 
-        val result = useCase.execute(dtoWithSmallAmount)
+        val result = useCase(dtoWithSmallAmount)
 
         assertEquals(smallAmount, result.amount)
     }
@@ -200,7 +200,7 @@ class CreateTransactionUseCaseTest {
         every { sellerRepository.findActiveById(dtoWithZeroAmount.sellerId) } returns seller
 
         assertThrows<InvalidTransactionAmountException> {
-            useCase.execute(dtoWithZeroAmount)
+            useCase(dtoWithZeroAmount)
         }
 
         verify(exactly = 0) {
@@ -215,7 +215,7 @@ class CreateTransactionUseCaseTest {
         every { sellerRepository.findActiveById(dtoWithNegativeAmount.sellerId) } returns seller
 
         assertThrows<InvalidTransactionAmountException> {
-            useCase.execute(dtoWithNegativeAmount)
+            useCase(dtoWithNegativeAmount)
         }
 
         verify(exactly = 0) {

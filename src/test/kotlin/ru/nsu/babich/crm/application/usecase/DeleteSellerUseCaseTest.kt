@@ -50,7 +50,7 @@ class DeleteSellerUseCaseTest {
         every { LocalDateTime.now() } returns fixedDateTime
         every { sellerRepository.save(any()) } returnsArgument 0
 
-        useCase.execute(seller.id!!)
+        useCase(seller.id!!)
 
         verify {
             sellerRepository.save(
@@ -66,7 +66,7 @@ class DeleteSellerUseCaseTest {
         every { sellerRepository.findActiveById(seller.id!!) } returns null
 
         assertThrows<SellerNotFoundException> {
-            useCase.execute(seller.id!!)
+            useCase(seller.id!!)
         }
 
         verify(exactly = 0) {

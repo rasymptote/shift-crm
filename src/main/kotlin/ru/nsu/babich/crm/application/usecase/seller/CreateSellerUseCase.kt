@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 class CreateSellerUseCase(
     private val sellerRepository: SellerRepository,
 ) {
-    fun execute(dto: CreateSellerDto): Seller {
+    operator fun invoke(dto: CreateSellerDto): Seller {
         val seller =
             Seller(
                 id = null,
