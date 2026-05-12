@@ -1,12 +1,10 @@
 package ru.nsu.babich.crm.application.usecase.transaction
 
 import ru.nsu.babich.crm.application.dto.CreateTransactionDto
-import ru.nsu.babich.crm.domain.exception.InvalidTransactionAmountException
 import ru.nsu.babich.crm.domain.exception.SellerNotFoundException
 import ru.nsu.babich.crm.domain.model.Transaction
 import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 import ru.nsu.babich.crm.domain.port.repository.TransactionRepository
-import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class CreateTransactionUseCase(
@@ -18,10 +16,6 @@ class CreateTransactionUseCase(
             sellerRepository.findActiveById(dto.sellerId)
                 ?: throw SellerNotFoundException(dto.sellerId)
 
-        if (dto.amount <= BigDecimal.ZERO) {
-            throw InvalidTransactionAmountException()
-        }
-
         val transaction =
             Transaction(
                 null,
@@ -30,6 +24,7 @@ class CreateTransactionUseCase(
                 paymentType = dto.paymentType,
                 transactionDate = LocalDateTime.now(),
             )
+
         return transactionRepository.save(transaction)
     }
 }
