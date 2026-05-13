@@ -33,7 +33,7 @@ class PersistenceTransactionRepositoryTest : AbstractPostgresIntegrationTest() {
     fun `should find all transactions`() {
         val savedSeller = jpaSellerRepository.save(SellerFixture.seller().toEntity())
 
-        jpaTransactionRepository.save(TransactionFixture.transaction(savedSeller.toDomain()).toEntity())
+        jpaTransactionRepository.save(TransactionFixture.transaction(seller = savedSeller.toDomain()).toEntity())
 
         val transactions = persistenceTransactionRepository.findAll()
 
@@ -45,10 +45,10 @@ class PersistenceTransactionRepositoryTest : AbstractPostgresIntegrationTest() {
     fun `should find all transactions by seller id for active seller`() {
         val savedSeller = jpaSellerRepository.save(SellerFixture.seller().toEntity())
 
-        jpaTransactionRepository.save(TransactionFixture.transaction(savedSeller.toDomain()).toEntity())
+        jpaTransactionRepository.save(TransactionFixture.transaction(seller = savedSeller.toDomain()).toEntity())
         jpaTransactionRepository.save(
             TransactionFixture
-                .transaction(savedSeller.toDomain(), "200.00", PaymentType.CASH)
+                .transaction(seller = savedSeller.toDomain(), amount = "200.00", paymentType = PaymentType.CASH)
                 .toEntity(),
         )
 
@@ -66,7 +66,7 @@ class PersistenceTransactionRepositoryTest : AbstractPostgresIntegrationTest() {
                 SellerFixture.seller(deletedAt = LocalDateTime.now()).toEntity(),
             )
 
-        jpaTransactionRepository.save(TransactionFixture.transaction(savedSeller.toDomain()).toEntity())
+        jpaTransactionRepository.save(TransactionFixture.transaction(seller = savedSeller.toDomain()).toEntity())
 
         val transactions = persistenceTransactionRepository.findAllBySellerId(savedSeller.id)
 
@@ -79,7 +79,7 @@ class PersistenceTransactionRepositoryTest : AbstractPostgresIntegrationTest() {
 
         val savedTransaction =
             jpaTransactionRepository.save(
-                TransactionFixture.transaction(savedSeller.toDomain()).toEntity(),
+                TransactionFixture.transaction(seller = savedSeller.toDomain()).toEntity(),
             )
 
         val transaction = persistenceTransactionRepository.findById(savedTransaction.id)

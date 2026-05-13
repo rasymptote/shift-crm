@@ -8,14 +8,17 @@ import java.time.LocalDateTime
 
 object TransactionFixture {
     fun transaction(
-        seller: Seller,
+        id: Long? = null,
+        seller: Seller = SellerFixture.seller(),
         amount: String = "100.00",
         paymentType: PaymentType = PaymentType.CARD,
+        transactionDate: LocalDateTime =
+            LocalDateTime.of(2024, 1, 1, 0, 0),
     ) = Transaction(
-        id = null,
+        id = id,
         seller = seller,
         amount = BigDecimal(amount),
         paymentType = paymentType,
-        transactionDate = LocalDateTime.now(),
+        transactionDate = transactionDate,
     )
 }

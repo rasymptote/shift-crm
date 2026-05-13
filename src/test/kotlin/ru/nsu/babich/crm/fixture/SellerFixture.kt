@@ -5,13 +5,17 @@ import java.time.LocalDateTime
 
 object SellerFixture {
     fun seller(
+        id: Long? = null,
         name: String = "John Doe",
+        contactInfo: String = "john@example.com",
+        registrationDate: LocalDateTime =
+            LocalDateTime.of(2024, 1, 1, 0, 0),
         deletedAt: LocalDateTime? = null,
     ) = Seller(
-        id = null,
+        id = id,
         name = name,
-        contactInfo = "john@example.com",
-        registrationDate = LocalDateTime.now(),
+        contactInfo = contactInfo,
+        registrationDate = registrationDate,
         deletedAt = deletedAt,
     )
 }

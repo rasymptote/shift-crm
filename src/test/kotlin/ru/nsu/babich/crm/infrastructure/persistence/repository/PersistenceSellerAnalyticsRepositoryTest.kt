@@ -46,22 +46,26 @@ class PersistenceSellerAnalyticsRepositoryTest : AbstractPostgresIntegrationTest
                 from = LocalDateTime.now().minusDays(1),
                 to = LocalDateTime.now().plusDays(1),
             )
+        val inPeriodDate = period.from.plusHours(1)
 
         val johnTransaction1 =
             TransactionFixture.transaction(
                 seller = sellerJohn.toDomain(),
                 amount = "100.00",
+                transactionDate = inPeriodDate,
             )
         val johnTransaction2 =
             TransactionFixture.transaction(
                 seller = sellerJohn.toDomain(),
                 amount = "200.00",
                 paymentType = PaymentType.CASH,
+                transactionDate = inPeriodDate,
             )
         val janeTransaction =
             TransactionFixture.transaction(
                 seller = sellerJane.toDomain(),
                 amount = "150.00",
+                transactionDate = inPeriodDate,
             )
 
         jpaTransactionRepository.save(johnTransaction1.toEntity())
@@ -102,11 +106,13 @@ class PersistenceSellerAnalyticsRepositoryTest : AbstractPostgresIntegrationTest
                 from = LocalDateTime.now().minusDays(1),
                 to = LocalDateTime.now().plusDays(1),
             )
+        val inPeriodDate = period.from.plusHours(1)
 
         val transaction =
             TransactionFixture.transaction(
                 seller = deletedSeller.toDomain(),
                 amount = "100.00",
+                transactionDate = inPeriodDate,
             )
         jpaTransactionRepository.save(transaction.toEntity())
 
@@ -144,22 +150,26 @@ class PersistenceSellerAnalyticsRepositoryTest : AbstractPostgresIntegrationTest
                 from = LocalDateTime.now().minusDays(1),
                 to = LocalDateTime.now().plusDays(1),
             )
+        val inPeriodDate = period.from.plusHours(1)
 
         val johnTransaction =
             TransactionFixture.transaction(
                 seller = sellerJohn.toDomain(),
                 amount = "100.00",
+                transactionDate = inPeriodDate,
             )
         val janeTransaction =
             TransactionFixture.transaction(
                 seller = sellerJane.toDomain(),
                 amount = "250.00",
                 paymentType = PaymentType.CASH,
+                transactionDate = inPeriodDate,
             )
         val bobTransaction =
             TransactionFixture.transaction(
                 seller = sellerBob.toDomain(),
                 amount = "50.00",
+                transactionDate = inPeriodDate,
             )
 
         jpaTransactionRepository.save(johnTransaction.toEntity())
