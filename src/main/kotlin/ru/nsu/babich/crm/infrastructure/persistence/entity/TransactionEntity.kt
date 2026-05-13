@@ -11,16 +11,12 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
-import lombok.AllArgsConstructor
-import lombok.NoArgsConstructor
 import ru.nsu.babich.crm.domain.model.PaymentType
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity
 @Table(name = "transactions")
-@NoArgsConstructor
-@AllArgsConstructor
 class TransactionEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
