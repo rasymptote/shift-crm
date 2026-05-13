@@ -1,7 +1,8 @@
-package ru.nsu.babich.crm.presentation.dto.seller
+package ru.nsu.babich.crm.presentation.dto
+
 import jakarta.validation.constraints.NotBlank
 
-data class UpdateSellerRequest(
+data class CreateSellerRequest(
     @field:NotBlank
     val name: String,
     @field:NotBlank

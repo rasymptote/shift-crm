@@ -1,4 +1,4 @@
-package ru.nsu.babich.crm.presentation.dto.seller
+package ru.nsu.babich.crm.presentation.dto
 import java.time.LocalDateTime
 
 data class SellerResponse(

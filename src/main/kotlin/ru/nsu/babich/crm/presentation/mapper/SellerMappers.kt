@@ -3,9 +3,9 @@ package ru.nsu.babich.crm.presentation.mapper
 import ru.nsu.babich.crm.application.dto.CreateSellerDto
 import ru.nsu.babich.crm.application.dto.UpdateSellerDto
 import ru.nsu.babich.crm.domain.model.Seller
-import ru.nsu.babich.crm.presentation.dto.seller.CreateSellerRequest
-import ru.nsu.babich.crm.presentation.dto.seller.SellerResponse
-import ru.nsu.babich.crm.presentation.dto.seller.UpdateSellerRequest
+import ru.nsu.babich.crm.presentation.dto.CreateSellerRequest
+import ru.nsu.babich.crm.presentation.dto.SellerResponse
+import ru.nsu.babich.crm.presentation.dto.UpdateSellerRequest
 
 fun CreateSellerRequest.toDto() =
     CreateSellerDto(

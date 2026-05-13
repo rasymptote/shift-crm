@@ -26,8 +26,8 @@ import ru.nsu.babich.crm.application.usecase.seller.GetSellerUseCase
 import ru.nsu.babich.crm.application.usecase.seller.UpdateSellerUseCase
 import ru.nsu.babich.crm.domain.exception.SellerNotFoundException
 import ru.nsu.babich.crm.fixture.SellerFixture
-import ru.nsu.babich.crm.presentation.dto.seller.CreateSellerRequest
-import ru.nsu.babich.crm.presentation.dto.seller.UpdateSellerRequest
+import ru.nsu.babich.crm.presentation.dto.CreateSellerRequest
+import ru.nsu.babich.crm.presentation.dto.UpdateSellerRequest
 import ru.nsu.babich.crm.presentation.exception.GlobalExceptionHandler
 import java.time.LocalDateTime
 

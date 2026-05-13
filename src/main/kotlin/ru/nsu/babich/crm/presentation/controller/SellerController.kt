@@ -16,9 +16,9 @@ import ru.nsu.babich.crm.application.usecase.seller.DeleteSellerUseCase
 import ru.nsu.babich.crm.application.usecase.seller.GetAllSellersUseCase
 import ru.nsu.babich.crm.application.usecase.seller.GetSellerUseCase
 import ru.nsu.babich.crm.application.usecase.seller.UpdateSellerUseCase
-import ru.nsu.babich.crm.presentation.dto.seller.CreateSellerRequest
-import ru.nsu.babich.crm.presentation.dto.seller.SellerResponse
-import ru.nsu.babich.crm.presentation.dto.seller.UpdateSellerRequest
+import ru.nsu.babich.crm.presentation.dto.CreateSellerRequest
+import ru.nsu.babich.crm.presentation.dto.SellerResponse
+import ru.nsu.babich.crm.presentation.dto.UpdateSellerRequest
 import ru.nsu.babich.crm.presentation.mapper.toDto
 import ru.nsu.babich.crm.presentation.mapper.toResponse
 
