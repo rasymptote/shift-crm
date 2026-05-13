@@ -2,6 +2,8 @@ package ru.nsu.babich.crm.infrastructure.configuration
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import ru.nsu.babich.crm.application.usecase.analytics.GetSellersWithTurnoverLessThanUseCase
+import ru.nsu.babich.crm.application.usecase.analytics.GetTopSellerUseCase
 import ru.nsu.babich.crm.application.usecase.seller.CreateSellerUseCase
 import ru.nsu.babich.crm.application.usecase.seller.DeleteSellerUseCase
 import ru.nsu.babich.crm.application.usecase.seller.GetAllSellersUseCase
@@ -11,6 +13,7 @@ import ru.nsu.babich.crm.application.usecase.transaction.CreateTransactionUseCas
 import ru.nsu.babich.crm.application.usecase.transaction.GetAllTransactionsUseCase
 import ru.nsu.babich.crm.application.usecase.transaction.GetTransactionUseCase
 import ru.nsu.babich.crm.application.usecase.transaction.GetTransactionsBySellerUseCase
+import ru.nsu.babich.crm.domain.port.repository.SellerAnalyticsRepository
 import ru.nsu.babich.crm.domain.port.repository.SellerRepository
 import ru.nsu.babich.crm.domain.port.repository.TransactionRepository
 
@@ -47,4 +50,11 @@ class CrmApplicationConfiguration {
 
     @Bean
     fun getTransactionUseCase(repository: TransactionRepository): GetTransactionUseCase = GetTransactionUseCase(repository)
+
+    @Bean
+    fun getTopSellerUseCase(repository: SellerAnalyticsRepository): GetTopSellerUseCase = GetTopSellerUseCase(repository)
+
+    @Bean
+    fun getSellersWithTurnoverLessThan(repository: SellerAnalyticsRepository): GetSellersWithTurnoverLessThanUseCase =
+        GetSellersWithTurnoverLessThanUseCase(repository)
 }
